@@ -8,7 +8,6 @@ RUN apt-get update && apt-get install --yes --no-install-recommends \
     bison \
     ca-certificates \
     ccache \
-    cmake \
     flex \
     gawk \
     gettext \
@@ -43,7 +42,11 @@ RUN apt-get update && apt-get install --yes --no-install-recommends \
 
 ENV HOME=/home/captain \
   WSBU_C_COMPILER=/opt/linaro/bin/arm-linux-gnueabihf-gcc \
-  WSBU_CXX_COMPILER=/opt/linaro/bin/arm-linux-gnueabihf-g++
+  WSBU_CXX_COMPILER=/opt/linaro/bin/arm-linux-gnueabihf-g++ \
+  WSBU_EMULATOR=/usr/bin/qemu-arm \
+  CMAKE_TOOLCHAIN_FILE=/opt/toolchain-linaro-armhf.cmake
+
+COPY toolchain.cmake "$CMAKE_TOOLCHAIN_FILE"
 
 RUN git clone https://github.com/wsbu/linaro-release.git \
     --branch gcc-linaro-4.9.4-2017.01-x86_64_arm-linux-gnueabihf \
@@ -77,6 +80,10 @@ RUN git clone https://github.com/wsbu/cross-browser.git \
   && cp --archive /src/x/lib/old/*.js /lib/crossbrowser \
   && cd - \
   && rm -rf /src
+
+RUN wget --quiet -O /tmp/cmake.sh https://cmake.org/files/v3.10/cmake-3.10.1-Linux-x86_64.sh \
+  && sh /tmp/cmake.sh --prefix=/usr/local --exclude-subdir --skip-license \
+  && rm /tmp/cmake.sh
 
 RUN groupadd --gid 1000 captain \
   && useradd --home-dir "$HOME" \
