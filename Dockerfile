@@ -44,6 +44,7 @@ ENV HOME=/home/captain \
   WSBU_C_COMPILER=/opt/linaro/bin/arm-linux-gnueabihf-gcc \
   WSBU_CXX_COMPILER=/opt/linaro/bin/arm-linux-gnueabihf-g++ \
   WSBU_EMULATOR=/usr/bin/qemu-arm \
+  QEMU_LD_PREFIX=/opt/linaro/arm-linux-gnueabihf/libc \
   CMAKE_TOOLCHAIN_FILE=/opt/toolchain-linaro-armhf.cmake
 
 COPY toolchain.cmake "$CMAKE_TOOLCHAIN_FILE"
