@@ -13,6 +13,7 @@ RUN apt-get update && apt-get install --yes --no-install-recommends \
     gawk \
     gettext \
     git-core \
+    gperf \
     intltool \
     liblist-moreutils-perl \
     liblzo2-dev \
@@ -30,6 +31,7 @@ RUN apt-get update && apt-get install --yes --no-install-recommends \
     rsync \
     scons \
     sudo \
+    texinfo \
     u-boot-tools \
     uuid-dev \
     wget \
