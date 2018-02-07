@@ -4,6 +4,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update && apt-get install --yes --no-install-recommends \
     automake \
+    autopoint \
     bc \
     bison \
     ca-certificates \
