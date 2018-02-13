@@ -65,12 +65,6 @@ RUN apt-get update && apt-get install --yes --no-install-recommends \
   && ln -sf /usr/bin/nodejs /usr/bin/node \
   && ln -sf /bin/bash /bin/sh
 
-RUN git clone https://github.com/wsbu/linaro-release.git \
-    --branch gcc-linaro-4.9.4-2017.01-x86_64_arm-linux-gnueabihf \
-    --depth 1 \
-    "/opt/linaro" \
-  && rm -rf "/opt/linaro/.git"
-
 ENV HOME=/home/captain \
   GCC_PREFIX=/opt/linaro \
   WSBU_C_COMPILER=/opt/linaro/bin/arm-linux-gnueabihf-gcc \
@@ -78,6 +72,12 @@ ENV HOME=/home/captain \
   WSBU_EMULATOR=/usr/bin/qemu-arm \
   QEMU_LD_PREFIX=/opt/linaro/arm-linux-gnueabihf/libc \
   CMAKE_TOOLCHAIN_FILE=/opt/toolchain-linaro-armhf.cmake
+
+RUN git clone https://github.com/wsbu/linaro-release.git \
+    --branch gcc-linaro-4.9.4-2017.01-x86_64_arm-linux-gnueabihf \
+    --depth 1 \
+    "${GCC_PREFIX}" \
+  && rm -rf "${GCC_PREFIX}/.git"
 
 COPY toolchain.cmake "${CMAKE_TOOLCHAIN_FILE}"
 
