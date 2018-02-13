@@ -1,3 +1,24 @@
+# wsbu/toolchain-linaro:4.9
+#
+# Example invocation of this image might look like:
+#
+#     ```sh
+#     docker run -it --rm \
+#         -e uid=$(id -u) \
+#         -e gid=$(id -g) \
+#         -e SSH_AUTH_SOCK=/tmp/ssh_auth.sock \
+#         -v "${SSH_AUTH_SOCK}":/tmp/ssh_auth.sock \
+#         -v $HOME/.ssh/known_hosts:/home/captain/.ssh/known_hosts \
+#         -w /opt/project \
+#         -v `pwd`:/opt/project \
+#         -v $HOME/.conan/data:/home/captain/.conan/data \
+#         -v $HOME/.conan/registry.txt:/home/captain/.conan/registry.txt \
+#         -v $HOME/.conan/.conan.db:/home/captain/.conan/.conan.db \
+#         wsbu/toolchain-linaro \
+#         "$@"
+#     ```
+#
+
 FROM ubuntu:16.04
 
 ENV DEBIAN_FRONTEND=noninteractive
@@ -25,7 +46,11 @@ RUN apt-get update && apt-get install --yes --no-install-recommends \
     mtd-utils \
     net-tools \
     nodejs \
+    openssh-client \
     pkg-config \
+    python-pip \
+    python-setuptools \
+    python-wheel \
     qemu-system-arm \
     qemu-user \
     rsync \
@@ -50,7 +75,8 @@ ENV HOME=/home/captain \
   QEMU_LD_PREFIX=/opt/linaro/arm-linux-gnueabihf/libc \
   CMAKE_TOOLCHAIN_FILE=/opt/toolchain-linaro-armhf.cmake
 
-COPY toolchain.cmake "$CMAKE_TOOLCHAIN_FILE"
+COPY toolchain.cmake "${CMAKE_TOOLCHAIN_FILE}"
+RUN sed -i 's;@GCC_INSTALL_ROOT@;/opt/linaro;' "${CMAKE_TOOLCHAIN_FILE}"
 
 RUN git clone https://github.com/wsbu/linaro-release.git \
     --branch gcc-linaro-4.9.4-2017.01-x86_64_arm-linux-gnueabihf \
@@ -89,6 +115,17 @@ RUN wget --quiet -O /tmp/cmake.sh https://cmake.org/files/v3.10/cmake-3.10.1-Lin
   && sh /tmp/cmake.sh --prefix=/usr/local --exclude-subdir --skip-license \
   && rm /tmp/cmake.sh
 
+# Install Conan
+RUN pip install conan==1.0.4
+ENV CONAN_CMAKE_TOOLCHAIN_FILE="${CMAKE_TOOLCHAIN_FILE}" \
+  CONAN_PRINT_RUN_COMMANDS=1 \
+  CC="${WSBU_C_COMPILER}" \
+  CXX="${WSBU_CXX_COMPILER}"
+COPY conan/sitara_profile "${HOME}/.conan/profiles/sitara"
+COPY conan/settings.yml "${HOME}/.conan/settings.yml"
+COPY conan/registry.txt "${HOME}/.conan/registry.txt"
+RUN ln -s "${HOME}/.conan/profiles/sitara" "${HOME}/.conan/profiles/default"
+
 RUN groupadd --gid 1000 captain \
   && useradd --home-dir "$HOME" \
     --uid 1000 --gid 1000 \
@@ -99,3 +136,7 @@ RUN groupadd --gid 1000 captain \
   && chown --recursive captain:captain "$HOME" \
   && chmod --recursive 777 "$HOME" \
   && echo "ALL ALL=NOPASSWD: ALL" >> /etc/sudoers
+
+COPY start.sh /start.sh
+ENTRYPOINT ["/start.sh"]
+
