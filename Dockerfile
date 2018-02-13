@@ -66,7 +66,6 @@ RUN apt-get update && apt-get install --yes --no-install-recommends \
   && ln -sf /bin/bash /bin/sh
 
 ENV HOME=/home/captain \
-  GCC_PREFIX=/opt/linaro \
   WSBU_C_COMPILER=/opt/linaro/bin/arm-linux-gnueabihf-gcc \
   WSBU_CXX_COMPILER=/opt/linaro/bin/arm-linux-gnueabihf-g++ \
   WSBU_EMULATOR=/usr/bin/qemu-arm \
@@ -74,13 +73,13 @@ ENV HOME=/home/captain \
   CMAKE_TOOLCHAIN_FILE=/opt/toolchain-linaro-armhf.cmake
 
 COPY toolchain.cmake "${CMAKE_TOOLCHAIN_FILE}"
+RUN sed -i 's;@GCC_INSTALL_ROOT@;/opt/linaro;' "${CMAKE_TOOLCHAIN_FILE}"
 
 RUN git clone https://github.com/wsbu/linaro-release.git \
     --branch gcc-linaro-4.9.4-2017.01-x86_64_arm-linux-gnueabihf \
     --depth 1 \
-    "${GCC_PREFIX}" \
-  && rm -rf "${GCC_PREFIX}/.git"
-
+    /opt/linaro \
+  && rm -rf /opt/linaro/.git
 
 RUN git clone https://github.com/wsbu/mtd-utils.git \
     --branch v2.0.1 \

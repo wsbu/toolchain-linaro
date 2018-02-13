@@ -5,7 +5,7 @@ set(CMAKE_SYSTEM_PROCESSOR arm)
 set(CMAKE_C_COMPILER   "$ENV{WSBU_C_COMPILER}")
 set(CMAKE_CXX_COMPILER "$ENV{WSBU_CXX_COMPILER}")
 
-set(CMAKE_FIND_ROOT_PATH "$ENV{GCC_PREFIX}/arm-linux-gnueabihf")
+set(CMAKE_FIND_ROOT_PATH "@GCC_INSTALL_ROOT@/arm-linux-gnueabihf")
 
 # Discard path returned by pkg-config and associated with HINTS in module
 # like FindOpenSSL.
