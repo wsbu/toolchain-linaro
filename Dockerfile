@@ -73,13 +73,14 @@ ENV HOME=/home/captain \
   QEMU_LD_PREFIX=/opt/linaro/arm-linux-gnueabihf/libc \
   CMAKE_TOOLCHAIN_FILE=/opt/toolchain-linaro-armhf.cmake
 
+COPY toolchain.cmake "${CMAKE_TOOLCHAIN_FILE}"
+
 RUN git clone https://github.com/wsbu/linaro-release.git \
     --branch gcc-linaro-4.9.4-2017.01-x86_64_arm-linux-gnueabihf \
     --depth 1 \
     "${GCC_PREFIX}" \
   && rm -rf "${GCC_PREFIX}/.git"
 
-COPY toolchain.cmake "${CMAKE_TOOLCHAIN_FILE}"
 
 RUN git clone https://github.com/wsbu/mtd-utils.git \
     --branch v2.0.1 \
