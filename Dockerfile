@@ -78,6 +78,7 @@ ENV HOME=/home/captain \
   WSBU_EMULATOR=/usr/bin/qemu-arm \
   QEMU_LD_PREFIX=${GCC_PREFIX}/arm-linux-gnueabihf/libc \
   CMAKE_TOOLCHAIN_FILE=/opt/toolchain-linaro-armhf.cmake
+
 COPY toolchain.cmake "${CMAKE_TOOLCHAIN_FILE}"
 
 RUN git clone https://github.com/wsbu/mtd-utils.git \
