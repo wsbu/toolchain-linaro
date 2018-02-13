@@ -2,8 +2,8 @@ set(CMAKE_SYSTEM_NAME Linux)
 set(CMAKE_SYSTEM_VERSION 1)
 set(CMAKE_SYSTEM_PROCESSOR arm)
 
-set(CMAKE_C_COMPILER   "$ENV{GCC_PREFIX}/bin/arm-linux-gnueabihf-gcc")
-set(CMAKE_CXX_COMPILER "$ENV{GCC_PREFIX}/bin/arm-linux-gnueabihf-g++")
+set(CMAKE_C_COMPILER   "$ENV{WSBU_C_COMPILER}")
+set(CMAKE_CXX_COMPILER "$ENV{WSBU_CXX_COMPILER}")
 
 set(CMAKE_FIND_ROOT_PATH "$ENV{GCC_PREFIX}/arm-linux-gnueabihf")
 
