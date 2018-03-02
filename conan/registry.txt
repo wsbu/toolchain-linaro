@@ -1,4 +1,0 @@
-ci http://ci.redlion.net:9300 True
-conan-center https://conan.bintray.com True
-conan-transit https://conan-transit.bintray.com True
-bintray-community https://api.bintray.com/conan/conan-community/conan True
