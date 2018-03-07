@@ -1,5 +1,5 @@
 [build_requires]
-linux/4.4.36-1@wsbu/stable
+linux/4.4.36@wsbu/stable
 [settings]
 os=Linux
 os_build=Linux
