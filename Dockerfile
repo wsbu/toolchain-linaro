@@ -44,6 +44,8 @@ RUN apt-get update && apt-get install --yes --no-install-recommends \
       --depth 1 \
       /opt/linaro \
     && rm -rf /opt/linaro/.git \
+  && wget https://d1b0l86ne08fsf.cloudfront.net/mender-artifact/2.2.0/mender-artifact -O /usr/bin/mender-artifact \
+  && chmod 0755 /usr/bin/mender-artifact \
   && mkdir --parents $HOME/.ssh \
   && sed -i 's;@GCC_INSTALL_ROOT@;/opt/linaro;' "${CMAKE_TOOLCHAIN_FILE}" \
   && ln -sf "${HOME}/.conan/profiles/sitara" "${HOME}/.conan/profiles/default" \
