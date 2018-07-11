@@ -8,6 +8,7 @@ set -e
 
 mkdir --parents ~/.conan/data
 touch ~/.conan/.conan.db
+touch ~/.conan/registry.txt
 
 set -x
 docker run -it --rm \
@@ -19,6 +20,7 @@ docker run -it --rm \
     -v "$HOME/.ssh/known_hosts:/home/captain/.ssh/known_hosts" \
     -v "${dir}:${dir}" \
     -v "$HOME/.conan/data:/home/captain/.conan/data" \
+    -v "$HOME/.conan/registry.txt:/home/captain/.conan/registry.txt" \
     -v "$HOME/.conan/.conan.db:/home/captain/.conan/.conan.db" \
     wsbu/toolchain-linaro "$@"
 
