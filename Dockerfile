@@ -51,3 +51,14 @@ RUN apt-get update && apt-get install --yes --no-install-recommends \
   && ln -sf "${HOME}/.conan/profiles/sitara" "${HOME}/.conan/profiles/default" \
   && chown --recursive captain:captain "$HOME" \
   && chmod --recursive 777 "$HOME"
+
+RUN groupadd --gid 1001 cocap1 \
+  && groupadd --gid 1002 cocap2 \
+  && groupadd --gid 1003 cocap3 \
+  && groupadd --gid 1004 cocap4 \
+  && groupadd --gid 1005 cocap5 \
+  && useradd --home-dir "${HOME}" --uid 1001 --gid 1001 cocap1 --groups 1000 \
+  && useradd --home-dir "${HOME}" --uid 1002 --gid 1002 cocap2 --groups 1000 \
+  && useradd --home-dir "${HOME}" --uid 1003 --gid 1003 cocap3 --groups 1000 \
+  && useradd --home-dir "${HOME}" --uid 1004 --gid 1004 cocap4 --groups 1000 \
+  && useradd --home-dir "${HOME}" --uid 1005 --gid 1005 cocap5 --groups 1000
