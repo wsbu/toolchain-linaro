@@ -1,25 +1,4 @@
-# wsbu/toolchain-linaro:4.9
-#
-# Example invocation of this image might look like:
-#
-#     ```sh
-#     docker run -it --rm \
-#         -e uid=$(id -u) \
-#         -e gid=$(id -g) \
-#         -e SSH_AUTH_SOCK=/tmp/ssh_auth.sock \
-#         -v "${SSH_AUTH_SOCK}":/tmp/ssh_auth.sock \
-#         -v $HOME/.ssh/known_hosts:/home/captain/.ssh/known_hosts \
-#         -w /opt/project \
-#         -v `pwd`:/opt/project \
-#         -v $HOME/.conan/data:/home/captain/.conan/data \
-#         -v $HOME/.conan/registry.txt:/home/captain/.conan/registry.txt \
-#         -v $HOME/.conan/.conan.db:/home/captain/.conan/.conan.db \
-#         wsbu/toolchain-linaro \
-#         "$@"
-#     ```
-#
-
-FROM wsbu/toolchain-native:v0.1.4
+FROM wsbu/toolchain-native:v0.1.6
 
 ENV WSBU_C_COMPILER=/opt/linaro/bin/arm-linux-gnueabihf-gcc \
   WSBU_CXX_COMPILER=/opt/linaro/bin/arm-linux-gnueabihf-g++ \
