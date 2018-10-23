@@ -1,4 +1,4 @@
-FROM wsbu/toolchain-native:v0.1.6
+FROM wsbu/toolchain-native:v0.1.7
 
 ENV WSBU_C_COMPILER=/opt/linaro/bin/arm-linux-gnueabihf-gcc \
   WSBU_CXX_COMPILER=/opt/linaro/bin/arm-linux-gnueabihf-g++ \
