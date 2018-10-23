@@ -20,5 +20,5 @@ docker run -it --rm \
     -v "${dir}:${dir}" \
     -v "$HOME/.conan/data:/home/captain/.conan/data" \
     -v "$HOME/.conan/.conan.db:/home/captain/.conan/.conan.db" \
-    wsbu/toolchain-linaro:1.1.7 "$@"
+    wsbu/toolchain-linaro:1.2.0 "$@"
 
