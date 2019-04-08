@@ -7,7 +7,7 @@ arch=armv7hf
 platform=sitara
 arch_build=x86_64
 compiler=gcc
-compiler.version=4.9
+compiler.version=7
 compiler.libcxx=libstdc++
 build_type=Release
 [options]
