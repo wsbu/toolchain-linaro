@@ -26,3 +26,5 @@ RUN apt-get update && apt-get install --yes --no-install-recommends \
   && ln -sf "${HOME}/.conan/profiles/sitara" "${HOME}/.conan/profiles/default" \
   && chown --recursive captain:captain "$HOME" \
   && chmod --recursive 777 "$HOME"
+
+LABEL "net.redlion.controller.platform"="s5t"
