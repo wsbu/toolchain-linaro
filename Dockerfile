@@ -1,9 +1,9 @@
-FROM wsbu/toolchain-native:v0.3.2
+FROM wsbu/toolchain-native:v0.3.3
 
-ENV WSBU_C_COMPILER=/opt/linaro/bin/arm-linux-gnueabihf-gcc \
-  WSBU_CXX_COMPILER=/opt/linaro/bin/arm-linux-gnueabihf-g++ \
+ENV WSBU_C_COMPILER=arm-linux-gnueabihf-gcc \
+  WSBU_CXX_COMPILER=arm-linux-gnueabihf-g++ \
   WSBU_EMULATOR=/usr/bin/qemu-arm \
-  QEMU_LD_PREFIX=/opt/linaro/arm-linux-gnueabihf/libc \
+  QEMU_LD_PREFIX=/usr/arm-linux-gnueabihf \
   CMAKE_TOOLCHAIN_FILE=/opt/toolchain-linaro-armhf.cmake
 
 ENV CONAN_CMAKE_TOOLCHAIN_FILE="${CMAKE_TOOLCHAIN_FILE}" \
@@ -17,16 +17,14 @@ COPY conan/sitara_profile "${HOME}/.conan/profiles/sitara"
 RUN apt-get update && apt-get install --yes --no-install-recommends \
       qemu-system-arm \
       qemu-user \
+      gcc-arm-linux-gnueabihf \
+      g++-arm-linux-gnueabihf \
+      gccgo-arm-linux-gnueabihf \
     && rm --recursive --force /var/lib/apt/lists/* \
-  && git clone https://github.com/wsbu/linaro-release.git \
-      --branch gcc-linaro-4.9.4-2017.01-x86_64_arm-linux-gnueabihf \
-      --depth 1 \
-      /opt/linaro \
-    && rm -rf /opt/linaro/.git \
-  && wget https://d1b0l86ne08fsf.cloudfront.net/mender-artifact/2.2.0/mender-artifact -O /usr/bin/mender-artifact \
-  && chmod 0755 /usr/bin/mender-artifact \
+  && pip3 --no-cache-dir install python-magic \
   && mkdir --parents $HOME/.ssh \
-  && sed -i 's;@GCC_INSTALL_ROOT@;/opt/linaro;' "${CMAKE_TOOLCHAIN_FILE}" \
   && ln -sf "${HOME}/.conan/profiles/sitara" "${HOME}/.conan/profiles/default" \
   && chown --recursive captain:captain "$HOME" \
   && chmod --recursive 777 "$HOME"
+
+LABEL "net.redlion.controller.platform"="s5t"
