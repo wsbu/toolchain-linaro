@@ -7,8 +7,19 @@ dir="$(pwd)"
 set -e
 
 mkdir --parents ~/.conan/data
-touch ~/.conan/.conan.db
-touch ~/.conan/registry.json
+
+if [[ ! -e "${HOME}/.conan/.conan.db" ]] ; then
+    echo "Conan database (~/.conan/.conan.db) does not exist. Please initialize Conan for your host system first."
+    exit 1
+fi
+if [[ ! -e "${HOME}/.conan/remotes.json" ]] ; then
+    if [[ -e "${HOME}/.conan/registry.json" ]] ; then
+        echo "This version of the Docker image contains a different version of Conan than your most recently used version. Please use your host-installed version of Conan to migrate and then try again."
+    else
+        echo "Conan database (~/.conan/remotes) does not exist. Please initialize Conan for your host system first."
+    fi
+    exit 1
+fi
 
 set -x
 docker run -it --rm \
@@ -20,6 +31,6 @@ docker run -it --rm \
     -v "$HOME/.ssh/known_hosts:/home/captain/.ssh/known_hosts" \
     -v "${dir}:${dir}" \
     -v "$HOME/.conan/data:/home/captain/.conan/data" \
-    -v "$HOME/.conan/registry.json:/home/captain/.conan/registry.json" \
+    -v "$HOME/.conan/remotes.json:/home/captain/.conan/remotes.json" \
     -v "$HOME/.conan/.conan.db:/home/captain/.conan/.conan.db" \
-    wsbu/toolchain-linaro:3.0.0 "$@"
+    wsbu/toolchain-linaro:3.0.1 "$@"
