@@ -1,4 +1,4 @@
-FROM wsbu/toolchain-native:v0.3.5
+FROM wsbu/toolchain-native:v0.3.6
 
 ENV WSBU_C_COMPILER=arm-linux-gnueabihf-gcc \
   WSBU_CXX_COMPILER=arm-linux-gnueabihf-g++ \
