@@ -33,4 +33,4 @@ docker run -it --rm \
     -v "$HOME/.conan/data:/home/captain/.conan/data" \
     -v "$HOME/.conan/remotes.json:/home/captain/.conan/remotes.json" \
     -v "$HOME/.conan/.conan.db:/home/captain/.conan/.conan.db" \
-    wsbu/toolchain-linaro:3.0.5 "$@"
+    wsbu/toolchain-linaro:3.0.6 "$@"
