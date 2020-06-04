@@ -20,7 +20,8 @@ RUN apt-get update && apt-get install --yes --no-install-recommends \
       gcc-arm-linux-gnueabihf \
       g++-arm-linux-gnueabihf \
       gccgo-arm-linux-gnueabihf \
-    && rm --recursive --force /var/lib/apt/lists/* \
+      libncurses5-dev \
+      && rm --recursive --force /var/lib/apt/lists/* \
   && pip3 --no-cache-dir install python-magic \
   && mkdir --parents $HOME/.ssh \
   && ln -sf "${HOME}/.conan/profiles/sitara" "${HOME}/.conan/profiles/default" \
